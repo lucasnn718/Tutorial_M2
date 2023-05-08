@@ -1,0 +1,61 @@
+ <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Curriculo</title>
+    </head>
+    <body>
+        <h1 id="nome"></h1>
+        <h2 id="cargo"></h2>
+        <script>
+            const url = '/curriculo';
+            
+            fetch(url)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                let usuarios = data;
+                let nome = '';
+                let imagem = '';
+                let cargo = '';
+                usuarios.map(function(usuario) {
+                nome += `${usuario.nome}`;
+                imagem += '<img src="' + `${usuario.foto}` + '"></img>';
+                cargo +=`${usuario.cargo}`
+                });
+
+                
+
+                document.getElementById('nome').innerHTML = nome;
+                document.getElementById('cargo').innerHTML = cargo;
+                document.getElementById('imagem').innerHTML = imagem;
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        </script>
+        <div id="imagem"></div>
+        <div>
+            <p><a href="/experiencias.html">Experiências</a></p>
+        </div>
+        <div>
+            <p><a href="/sobre.html">Sobre mim</a></p>
+        </div>
+        <div>
+            <p><a href="/formacao.html">Formação acadêmica</a></p>
+        </div>
+        <div>
+            <p><a href="/realizacoes.html">Realizações</a></p>
+        </div>
+        <div>
+            <p><a href="/habilidades.html">Habilidades</a></p>
+        </div>
+        <div>
+            <p><a href="/personalidade.html">Personalidade</a></p>
+        </div>
+
+    </body>
+    </html>

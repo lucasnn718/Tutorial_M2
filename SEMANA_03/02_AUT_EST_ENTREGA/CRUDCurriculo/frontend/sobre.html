@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Sobre Mim</title>
+</head>
+<body>
+    <h1 id="sinopse"></h1>
+    <div id="endereco"></div>
+    <div id="telefone"></div>
+    <div id="email"></div>
+    <script>
+        const url = '/sobre';
+        
+        fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            let usuarios = data;
+            let sinopse = '';
+            let endereco = 'Endereço: ';
+            let telefone = 'Telefone: ';
+            let email = 'Email: ';
+            usuarios.map(function(usuario) {
+            sinopse += `${usuario.sinopse}`;
+            endereco +=`${usuario.endereco}`;
+            telefone +=`${usuario.telefone}`;
+            email += `${usuario.email}`;
+            });
+
+            
+
+            document.getElementById('sinopse').innerHTML = sinopse;
+            document.getElementById('endereco').innerHTML = endereco;
+            document.getElementById('telefone').innerHTML = telefone;
+            document.getElementById('email').innerHTML = email;
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    </script>
+    <div>
+        <p><a href="/atualizarSobre.html">Atualizar informações</a></p>
+    </div>
+    <div>
+        <p><a href="/">Voltar</a></p>
+    </div>
+</body>
+</html>

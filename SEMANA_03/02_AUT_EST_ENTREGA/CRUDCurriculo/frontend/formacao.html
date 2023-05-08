@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Formação</title>
+</head>
+<body>
+    <div id="formacao"></div>
+    <script>
+        const url = '/formacao';
+        
+        fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            let usuarios = data;
+            let formacao = '';
+            usuarios.map(function(usuario) {
+            formacao += '<strong> ' + `${usuario.curso}` + '</strong> ' + ' | ' + `${usuario.duracao}` +'</br>'+ `${usuario.instituicao_diploma}` + '</br>';
+            });
+
+            document.getElementById('formacao').innerHTML = formacao;
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    </script>
+    <div>
+        <p><a href="/">Voltar</a></p>
+    </div>
+</body>
+</html>
