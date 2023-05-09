@@ -64,7 +64,7 @@ app.get('/habilidades', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*');
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    var sql = 'SELECT habilidade, id FROM habilidades ORDER BY id';
+    var sql = 'SELECT habilidade, hid FROM habilidades ORDER BY hid';
         db.all(sql, [],  (err, rows ) => {
             if (err) {
                 throw err;
@@ -119,9 +119,10 @@ app.get('/formacao', (req, res) => {
 app.get('/removerHabilidade', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*'); 
-    sql = "DELETE FROM habilidades WHERE id=" + req.query.id;
+    let params = [req.query.hid]
+    sql = `DELETE FROM habilidades WHERE hid=?`;
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    db.run(sql, [],  err => {
+    db.run(sql, params,  err => {
         if (err) {
             throw err;
         }
@@ -131,12 +132,27 @@ app.get('/removerHabilidade', (req, res) => {
     db.close(); // Fecha o banco
 });
 
+app.get('/insereHabilidade', (req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Access-Control-Allow-Origin', '*'); 
+    sql = "SELECT id_pessoal FROM dados_pessoais";
+    var db = new sqlite3.Database(DBPATH); // Abre o banco
+    db.all(sql, [],  (err, rows ) => {
+        if (err) {
+            throw err;
+        }
+        res.json(rows);
+    });
+    db.close(); // Fecha o banco
+});
+
 app.post('/insereHabilidade', urlencodedParser, (req, res) => {
     res.statusCode = 200;
     res.setHeader('Access-Control-Allow-Origin', '*'); 
+    let params = [req.body.id_pessoal , req.body.habilidade]
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    sql = "INSERT INTO habilidades (habilidade) VALUES ('" + req.body.habilidade + "')";
-    db.run(sql, [],  err => {
+    sql = `INSERT INTO habilidades (id_habilidades, habilidade) VALUES (?, ?)`;
+    db.run(sql, params,  err => {
         if (err) {
             throw err;
         }	
@@ -162,10 +178,11 @@ app.get('/atualizarSobre', (req, res) => {
 
 app.post('/atualizarSobre', urlencodedParser, (req, res) => {
     res.statusCode = 200;
-    res.setHeader('Access-Control-Allow-Origin', '*'); 
-    sql = "UPDATE sobre_mim SET endereco='" + req.body.endereco + "', telefone = '" + req.body.telefone + "' , email='" + req.body.email + "' , sinopse='" + req.body.sinopse +"'";
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    let params = [req.body.endereco, req.body.telefone, req.body.email, req.body.sinopse] 
+    sql = `UPDATE sobre_mim SET endereco=?, telefone=?, email=?, sinopse=?`;
     var db = new sqlite3.Database(DBPATH); // Abre o banco
-    db.run(sql, [],  err => {
+    db.run(sql, params,  err => {
         if (err) {
             throw err;
         }

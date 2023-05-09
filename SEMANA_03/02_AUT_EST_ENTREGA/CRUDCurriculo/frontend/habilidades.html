@@ -20,7 +20,7 @@
             let habilidade = '';
             usuarios.map(function(usuario) {
             habilidade += '<strong> ' + `${usuario.habilidade}` + '</strong>';
-            habilidade += '<a href="/removerHabilidade?id=' + `${usuario.id}` + '"> Remover</a></br>';
+            habilidade += '<a href="/removerHabilidade?hid=' + `${usuario.hid}` + '"> Remover</a></br>';
             console.log(usuario.id)
             });
 

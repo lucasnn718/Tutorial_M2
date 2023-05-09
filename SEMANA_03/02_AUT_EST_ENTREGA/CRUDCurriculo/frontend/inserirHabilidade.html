@@ -10,7 +10,30 @@
     <form name="form1" method="post" action="/insereHabilidade">
         Habilidade: <input type="text" name="habilidade" value="" required>
         <br>
+        <input type="hidden" id="id_pessoal" name="id_pessoal" value="">
+        <br>
         <input type="submit" value="INSERIR">  
     </form>    
+    <script>
+        let url = new URL(window.location.href);
+        let params = url.searchParams;
+        url = '/insereHabilidade?id_pessoal='+url.searchParams.get("id_pessoal");
+
+        fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            let usuarios = data;
+
+            usuarios.map(function(usuario) {
+                document.getElementById('id_pessoal').value = usuario.id_pessoal;
+            });
+            alert(response.json());
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    </script>
     </body>
     </html>
