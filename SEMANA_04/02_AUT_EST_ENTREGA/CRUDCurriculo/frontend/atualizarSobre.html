@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Atualizar</title>
+    </head>
+    <h1>Atualização de informações</h1>
+        <form name="form1" method="post" action="/atualizarSobre">
+            Endereço: <input type="text" id="endereco" name="endereco" size="100" value="">
+            <br>
+            TELEFONE: <input type="phone" id="telefone" name="telefone" value="">
+            <br>
+            EMAIL: <input type="e-mail" id="email" name="email" value="">
+            <br>
+            SINOPSE: <input type="text" id="sinopse" name="sinopse" size="500" value="">
+            <br>
+            <input type="submit" value="ATUALIZAR">  
+        </form>    
+        <script>
+            let url = '/atualizarSobre';
+
+            fetch(url)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                let usuarios = data;
+
+                usuarios.map(function(usuario) {
+                    document.getElementById('endereco').value = usuario.endereco;
+                    document.getElementById('sinopse').value = usuario.sinopse;
+                    document.getElementById('email').value = usuario.email;
+                    document.getElementById('telefone').value = usuario.telefone;
+                });
+                alert(response.json());
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+        </script>
+    </body>
+    </html>

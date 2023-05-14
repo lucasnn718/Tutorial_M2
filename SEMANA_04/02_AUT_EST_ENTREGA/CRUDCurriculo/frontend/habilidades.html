@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Habilidades</title>
+</head>
+<body>
+    <p id="habilidade"></p>
+    <script>
+        const url = '/habilidades';
+        
+        fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            let usuarios = data;
+            let habilidade = '';
+            usuarios.map(function(usuario) {
+            habilidade += '<strong> ' + `${usuario.habilidade}` + '</strong>';
+            habilidade += '<a href="/removerHabilidade?hid=' + `${usuario.hid}` + '"> Remover</a></br>';
+            console.log(usuario.id)
+            });
+
+            document.getElementById('habilidade').innerHTML = habilidade;
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    </script>
+    <div>
+        <p><a href="inserirHabilidade.html">Adicionar habilidade</a></p>
+    </div>
+    <div>
+        <p><a href="/">Voltar</a></p>
+    </div>
+</body>
+</html>
