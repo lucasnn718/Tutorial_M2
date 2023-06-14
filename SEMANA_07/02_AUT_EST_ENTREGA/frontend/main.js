@@ -62,13 +62,15 @@ function ajax_save(){
     request.open("GET", "save.txt", true);
     request.send();
     request.onreadystatechange = function(){
-        $('.self_destroy').text(request.responseText);
-        for(let i = 0; i < timeouts.length; i++){
-            clearTimeout(timeouts[i]);
+        if(request.readyState === 4 && request.status === 200){
+            $('.self_destroy').text(request.responseText);
+            for(let i = 0; i < timeouts.length; i++){
+                clearTimeout(timeouts[i]);
+            };
+            $('.self_destroy').fadeIn(2000);
+            setTimeout(function(){
+                $('.self_destroy').remove();
+            }, 5000);
         };
-        $('.self_destroy').fadeIn(2000);
-        setTimeout(function(){
-            $('.self_destroy').remove();
-        }, 5000);
     };
 };
