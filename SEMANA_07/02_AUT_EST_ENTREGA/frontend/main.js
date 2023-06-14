@@ -40,6 +40,7 @@ function brinks(){
 
     $('.self_destroy').text('BRINKS!');
     $('.selfdestroy').css({'color':'green'});
+    $('.stop_btn').remove();
     $('body').fadeIn(2000);
     setTimeout(function(){
         $('.self_destroy').remove();
